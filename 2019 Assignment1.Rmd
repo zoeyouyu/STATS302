@@ -5,7 +5,11 @@ date: "7/23/2019"
 output: html_document
 ---
 
-The file "fungal-with-order.csv" contains measurements of small molecules (*metabolites*) from 118 different samples. The first four columns contain information about the sample, and the remaining ones contain the metabolite measurements. Most samples have fungus growing in them (18 different types), but some have broth only.  This is specified in the "isolate" column. Half the samples have also had a dose of short chain fatty acids  added, in order to understand the metabolic changes induced. This information is in the  "Condition" column. The ID column combines these two bits of information, and the order column specifies the order in which the measurements were taken.  
+The file "fungal-with-order.csv" contains measurements of small molecules (*metabolites*) from 118 different samples. 
+
+The first four columns contain information about the sample, and the remaining ones contain the metabolite measurements. 
+
+Most samples have fungus growing in them (18 different types), but some have broth only.  This is specified in the "isolate" column. Half the samples have also had a dose of short chain fatty acids  added, in order to understand the metabolic changes induced. This information is in the  "Condition" column. The ID column combines these two bits of information, and the order column specifies the order in which the measurements were taken.  
 
 ```{r, echo=FALSE}
 read.csv("fungal-with-order.csv")->fungal
@@ -17,11 +21,14 @@ read.csv("fungal-with-order.csv")->fungal
 boxplot(fungal[,5:337], ylab="Metabolite", xlab="Intensity", horizontal=TRUE, names=c(1:333))
 axis(1)
 ```
+
+
 ```{r}
+
 fungal.sd<-apply(fungal[,5:337],2,sd)
 hist(fungal.sd, main="Standard deviations of the metabolites", xlab="Standard Deviation")
 ```
-*The metabolites do not seem to be on the same scale: theyhave a huge range of standard deviations, with a few very large and many very small. If we do not scale the data, the principal components will be dominated by the high variance metabolites.*
+*The metabolites do not seem to be on the same scale: they have a huge range of standard deviations, with a few very large and many very small. If we do not scale the data, the principal components will be dominated by the high variance metabolites.*
 
 2. Make a visualization of the correlation matrix of the metabolite measurements.  Are there groups of highly correlated metabolites?  Explain what features you are basing your conclusion on. 
 
@@ -51,10 +58,24 @@ round(fun.pr$sdev[1:10]^2/sum(fun.pr$sdev^2),2)
 4. Produce plots of the scores on the first two principal components.  First, use colors and/or symbols to indicate the fungus type.  Make a second plot using colors and/or symbols to indicate condition.  
 ```{r, fig.height=10, fig.width=10}
 #Fine (and easier) if you just you symbols here rather than symbols+colors. 
- plot(fun.pr$x[as.numeric(fungal$Isolate)< 9,1:2], col=fungal$Isolate[as.numeric(fungal$Isolate)< 9], pch=16, xlim=range(fun.pr$x[,1]), ylim=range(fun.pr$x[,2]))
-points(fun.pr$x[as.numeric(fungal$Isolate)< 17 & as.numeric(fungal$Isolate)>8 ,1:2], col=fungal$Isolate[as.numeric(fungal$Isolate)>8  & as.numeric(fungal$Isolate)< 17 ], pch=8)
-points(fun.pr$x[as.numeric(fungal$Isolate)> 16, 1:2], col=fungal$Isolate[as.numeric(fungal$Isolate)> 16] , pch=17)
-legend("bottomright", pch=c(rep(16,8),rep(8,8), rep(17,3)), col=c(1:8, 1:8, 1:3), legend=levels(fungal$Isolate))
+ plot(fun.pr$x[as.numeric(fungal$Isolate) < 9, 1:2],
+      col = fungal$Isolate[as.numeric(fungal$Isolate) < 9], 
+      pch = 16, 
+      xlim = range(fun.pr$x[,1]), ylim=range(fun.pr$x[,2]))
+
+
+points(fun.pr$x[as.numeric(fungal$Isolate) < 17 & as.numeric(fungal$Isolate)>8 ,1:2],
+       col=fungal$Isolate[as.numeric(fungal$Isolate) > 8  &
+                            as.numeric(fungal$Isolate)< 17 ], 
+       pch=8)
+
+points(fun.pr$x[as.numeric(fungal$Isolate)> 16, 1:2],
+       col=fungal$Isolate[as.numeric(fungal$Isolate)> 16] , pch=17)
+
+legend("bottomright", 
+       pch=c(rep(16,8), rep(8,8), rep(17,3)), 
+       col=c(1:8, 1:8, 1:3), 
+       legend=levels(fungal$Isolate))
 
 ```
 
