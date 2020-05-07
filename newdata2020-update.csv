@@ -1,0 +1,4 @@
+bornyear,tenure08,agereg,VAEstimate,VAStdErr,PSEstimate,PSStdErr,GEEstimate,GEStdErr,RQEstimate,RQStdErr,RLEstimate,RLStdErr,CCEstimate,CCStdErr
+1907,35,90,-0.95,0.26,0.72,0.48,0.64,0.19,-0.41,0.39,-0.03,0.35,0.94,0.34
+1966,18,31,0.86,0.21,1.01,0.37,0.56,0.17,0.65,0.31,0.58,0.21,0.82,0.26
+1960,1,4,-0.83,0.26,-1.21,0.48,-1.41,0.19,-0.89,0.39,-1.15,0.35,-1.14,0.34

@@ -38,11 +38,16 @@ plot(diabetes.predict$x[, 1], diabetes.predict$x[, 2],
 # To get an idea of classification accuracy
 table(diabetes.predict$class, diabetes$group)
 
-# posterior probabilities for observation 32. 
-# misclassification, it is group 2 but predicted to be group 3
+
 # (Same observation as lecture but slightly different probabilities)
 round(diabetes.predict$posterior[32, ], 2)
-#
+#notice how changing the prior changes the posterior probabilities
+eqprob.predict = predict(diabetes.lda, prior = c(1/3, 1/3, 1/3))
+round(eqprob.predict$posterior[32, ], 2)
+
+
+# posterior probabilities for observation 32. 
+# misclassification, it is group 2 but predicted to be group 3
 
 # find 32
 diabetes[32, ]
@@ -51,10 +56,6 @@ diabetes.predict$x[32, ]
 abline(v = 0.562222)
 abline(h = -0.5185387)
 
-
-# notice how changing the prior changes the posterior probabilities
-eqprob.predict = predict(diabetes.lda, prior = c(1/3, 1/3, 1/3))
-round(eqprob.predict$posterior[32, ], 2)
 
 # To interpret our canonical variates, check the *loadings*
 # the correlations of the new variables with the original variables
